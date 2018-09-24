@@ -8,10 +8,13 @@ const renderList = function(outputPlace,dataList){
     for(let i=0;i<dataList.length;i++){
         const output = $(outputPlace);
         const temp=$(`<div class='entry'>`);
+        const tempButton = $('<span class=left>');
+        tempButton.append($("<button type='submit' class='delEntry'>").text("delete"));
+        const tempSpan = $("<span class='entryText'>").text(`${dataList[i].newInput}`);
         temp.append(
-            $("<input type='checkbox'>"),
-            $("<span>").text(`${dataList[i].newInput}`),
-            $("<button type='submit' class='delEntry'>").text("delete"),
+            $("<input type='checkbox' class='inputBox'>"),
+            tempSpan,
+            tempButton,
             $("<br>")
         );
         output.append(temp);
@@ -26,6 +29,7 @@ const runListQuery = function(){
     );
 }
 
+/*
 const clearList = function(){
     alert("Clearing...");
     $.ajax({url:"/api/clear", method:"POST"}).then(
@@ -35,6 +39,7 @@ const clearList = function(){
     );
 }
 $("#clear").on("click",clearList);
+*/
 
 render();
 
@@ -86,7 +91,7 @@ $(document).on('click','#submitButton' ,submitFunc);
 //////////delete Function////////////////
 const deleteFunc = function(){
     console.log('get in delete');
-    let parent =$(this).parent().text();
+    let parent =$(this).parent().parent().text();
     const selEntry = {
         newInput: parent.substring(0,parent.length-6)
     };
@@ -111,9 +116,34 @@ $(document).on('click','.delEntry',deleteFunc);
 
 
 /////////put function/////////////
+/*
+const putFunc = function(){
+    console.log('get in putFunc');
+    let select =$(this).text();
+    const selEntry = {
+        newInput: select
+    };
+
+    console.log(selEntry);
+    $.ajax({url:'/api/list/:select', method:'PUT', data:selEntry}).then(
+        function(data){
+            console.log(data.success);
+            if(data.success){
+                console.log('input data in put method ajax', data);
+                alert('You just updated a new entry!');
+            }else{
+                alert("There's a problem with your submision");
+            }
+            
+        }
+    );
+
+};
 
 
+$(document).on('click','.inputBox',putFunc);
 
+*/
 
 
 

@@ -11,60 +11,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //routes
 //////////////////////api///////////////////////////
-const toDoList = require('./data/list.js');
-const sampleList = require('./data/sample-list.json');
 
-app.get('/api/list',function(req, res){
-    res.json(toDoList);
-});
-
-app.post('/api/list',function(req, res){
-    for(let key in req.body){
-        if(!sampleList.hasOwnProperty(key)){
-            return res.json({success: false});
-        }
-    }
-    for(let key in sampleList){
-        if(!req.body.hasOwnProperty(key)){
-            return res.json({success: false});
-        }
-    }
-    toDoList.push(req.body);
-    res.json({success: true});
-});
-
-app.get('/api/list/:index', function(req, res){
-    res.json(toDoList[req.params.index]);
-});
-
-app.delete('/api/list', function(req, res){
-    for(let i=0;i<toDoList.length;i++){
-        console.log(req.body);
-        console.log(toDoList[i]);
-        if (req.body.newInput===toDoList[i].newInput){
-            console.log('match');
-            toDoList.splice(i,1);
-            return res.json({success: true});
-        }
-    }
-    return res.json({success: false});
-});
-
-app.put('/api/list', function(req,res){
-    toDoList.splice(req.params.index,req.body);
-    //toDoList[req.params.index]=req.body;
-    return res.json({success: true});
-
-});
-
-///////////////////////////////
-
-//////////////////////////////html//
-
-app.get('*',function(req, res){
-    res.sendFile(path.join(__dirname, '../public/index.html'))
-});
-
+require('./routes/api_routes.js')(app);
 
 
 //////////////////////////////

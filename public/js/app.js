@@ -14,8 +14,7 @@ const renderList = function(outputPlace,dataList){
         temp.append(
             $("<input type='checkbox' class='inputBox'>"),
             tempSpan,
-            tempButton,
-            $("<br>")
+            tempButton
         );
         output.append(temp);
     }

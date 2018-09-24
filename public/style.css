@@ -78,6 +78,27 @@ hr {
     border-radius: 5px;
     width: 300px;
     margin:5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 10% 75% 10%; 
+}
+.entry input{
+    display: grid;
+    grid-row: span 1;
+    grid-column: span 1;
+}
+.left{
+    display: grid;
+    grid-row: span 1;
+    grid-column: span 1;
+}
+.entryText{
+    display: grid;
+    grid-row: span 1;
+    grid-column: span 1;
+
 }
 /*.entry > * {
     width: 100%;

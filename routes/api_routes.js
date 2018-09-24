@@ -31,8 +31,6 @@ module.exports = function(app) {
     
     app.delete('/api/list', function(req, res){
         for(let i=0;i<toDoList.length;i++){
-            console.log(req.body);
-            console.log(toDoList[i]);
             if (req.body.newInput===toDoList[i].newInput){
                 console.log('match');
                 toDoList.splice(i,1);

@@ -65,7 +65,7 @@ const submitFunc = function(){
             return;
         }
     }
-    console.log(newEntry.success);
+    
     $.ajax({url:'/api/list', method:'POST', data:newEntry}).then(
         function(data){
             if(data.success){
@@ -84,17 +84,16 @@ $(document).on('click','#submitButton' ,submitFunc);
 //////////////////////////////////////////////
 
 //////////delete Function////////////////
-const deleteFunc = function(event){
-    event.preventDefault();
+const deleteFunc = function(){
     console.log('get in delete');
     let parent =$(this).parent().text();
     const selEntry = {
         newInput: parent.substring(0,parent.length-6)
     };
     console.log(selEntry);
-    console.log(selEntry.success);
     $.ajax({url:'/api/list', method:'DELETE', data:selEntry}).then(
         function(data){
+            console.log(data.success);
             if(data.success){
                 console.log('input data in delete method ajax', data);
                 alert('You just deleted a new entry!');
@@ -109,6 +108,10 @@ const deleteFunc = function(event){
 
 
 $(document).on('click','.delEntry',deleteFunc);
+
+
+/////////put function/////////////
+
 
 
 

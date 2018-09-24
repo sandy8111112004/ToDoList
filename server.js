@@ -39,7 +39,10 @@ app.get('/api/list/:index', function(req, res){
 
 app.delete('/api/list', function(req, res){
     for(let i=0;i<toDoList.length;i++){
-        if (req.body===toDoList[i]){
+        console.log(req.body);
+        console.log(toDoList[i]);
+        if (req.body.newInput===toDoList[i].newInput){
+            console.log('match');
             toDoList.splice(i,1);
             return res.json({success: true});
         }
@@ -47,7 +50,7 @@ app.delete('/api/list', function(req, res){
     return res.json({success: false});
 });
 
-app.put('/api/list/:index', function(req,res){
+app.put('/api/list', function(req,res){
     toDoList.splice(req.params.index,req.body);
     //toDoList[req.params.index]=req.body;
     return res.json({success: true});

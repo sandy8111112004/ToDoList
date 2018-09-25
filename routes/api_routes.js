@@ -40,19 +40,21 @@ module.exports = function(app) {
         return res.json({success: false});
     });
     
-    /*
+    
     app.put('/api/list/:select', function(req,res){
         for(let i=0;i<toDoList.length;i++){
+            
             if(toDoList[i].newInput===req.params.select){
-                toDoList[i].newInput = 
+                toDoList.splice(i,req.body);
+                return res.json({success: true});
             }
         }
-        toDoList.splice(req.params.index,req.body);
+        
         //toDoList[req.params.index]=req.body;
-        return res.json({success: true});
+        return res.json({success: false});
     
     });
-    */
+    
     ///////////////////////////////
     
     //////////////////////////////html//

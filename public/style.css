@@ -78,8 +78,7 @@ hr {
     border-radius: 5px;
     width: 300px;
     margin:5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px;
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 10% 75% 10%; 

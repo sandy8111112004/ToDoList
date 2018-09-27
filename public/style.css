@@ -10,6 +10,21 @@ h6 {
     font-size: 40px;
 }
 
+#addIcon{
+    height: 18px;
+}
+#submitButton{
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+.delEntry{
+    background-color: #EAEAF0;
+    border: none;
+    cursor: pointer;
+}
+
+
 header {
     display: grid;
     grid-row: span 1;

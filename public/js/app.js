@@ -9,7 +9,7 @@ const renderList = function (outputPlace, dataList) {
         const output = $(outputPlace);
         const temp = $(`<div class='entry'>`);
         const tempButton = $('<span class=left>');
-        tempButton.append($("<button type='submit' class='delEntry'>").text("delete"));
+        tempButton.append($("<button type='submit' class='delEntry'>").append($("<img src='./trash-alt-solid.svg' style='height:18px;'/>")));
         const tempSpan = $("<span class='entryText'>").text(`${dataList[i].newInput}`);
         temp.append(
             $("<input type='checkbox' class='inputBox'>"),
@@ -86,7 +86,7 @@ const deleteFunc = function () {
     console.log('get in delete');
     let parent = $(this).parent().parent().text();
     const selEntry = {
-        newInput: parent.substring(0, parent.length - 6)
+        newInput: parent
     };
     console.log(selEntry);
     $.ajax({ url: '/api/list', method: 'DELETE', data: selEntry }).then(
@@ -94,7 +94,7 @@ const deleteFunc = function () {
             console.log(data.success);
             if (data.success) {
                 console.log('input data in delete method ajax', data);
-                alert('You just deleted a new entry!');
+                alert('You just deleted an entry!');
             } else {
                 alert("There's a problem with your submision");
             }
@@ -111,15 +111,20 @@ $(document).on('click', '.delEntry', deleteFunc);
 /////////put function/////////////
 /*
 const putFunc = function () {
-    state.click = true;
     console.log('get in putFunc');
-    let parent = $(this).parent().text();
-    const selEntry = parent.substring(0, parent.length - 6);
+    let parent = $(this).parent();
+    const selEntry = parent.text();
+    const tempButton = $('<span class=left>');
+        tempButton.append($("<button type='submit' class='delEntry'>").append($("<img src='./plus-square-regular.svg' style='height:18px;'/>")));
+    const toggleEntryPast = parent.childNodes[1];
+     parent.childNodes[1].html = 
+     `<input type="text" class="toggleInput" value='${toggleEntryPast.text()}' style="width: 300px"/>
+     <button type='submit' id="submitButton">`;
+     parent.childNodes[2].html= `${tempButton}`;
 
-    $(document).on('click', '#submitButton', function () {
+    $(document).on('click', '#updateButton', function () {
         const updateEntry = {
             newInput: $('#newInput').val().trim()
-            //id: count
         };
 
         console.log(selEntry);

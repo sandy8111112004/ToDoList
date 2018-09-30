@@ -1,67 +1,75 @@
 
-const toDoList = require('../data/list.js');
-const sampleList = require('../data/sample-list.json');
-    
+const ToDoDB = require("../data/list.js");
 
 
 
-module.exports = function(app) {
-    app.get('/api/list',function(req, res){
-        res.json(toDoList);
-    });
-    
-    app.post('/api/list',function(req, res){
-        for(let key in req.body){
-            if(!sampleList.hasOwnProperty(key)){
-                return res.json({success: false});
+module.exports = function (app) {
+    app.get('/api/list', function (req, res) {
+        ToDoDB.find({}).then(
+            function (dbToDo) {
+                res.json(dbToDo);
             }
-        }
-        for(let key in sampleList){
-            if(!req.body.hasOwnProperty(key)){
-                return res.json({success: false});
+        ).catch(
+            function (err) {
+                res.json(err);
             }
-        }
-        toDoList.push(req.body);
-        res.json({success: true});
+        );
     });
-    
-    app.get('/api/list/:index', function(req, res){
-        res.json(toDoList[req.params.index]);
-    });
-    
-    app.delete('/api/list', function(req, res){
-        for(let i=0;i<toDoList.length;i++){
-            if (req.body.newInput===toDoList[i].newInput){
-                console.log('match');
-                toDoList.splice(i,1);
-                return res.json({success: true});
+
+    app.post('/api/list', function (req, res) {
+        ToDoDB.create(req.body).then(
+            function (dbToDo) {
+                res.json(dbToDo);
             }
-        }
-        return res.json({success: false});
-    });
-    
-    
-    app.put('/api/list/:select', function(req,res){
-        for(let i=0;i<toDoList.length;i++){
-            
-            if(toDoList[i].newInput===req.params.select){
-                toDoList.splice(i,req.body);
-                return res.json({success: true});
+        ).catch(
+            function (err) {
+                res.json(err);
             }
-        }
-        
-        //toDoList[req.params.index]=req.body;
-        return res.json({success: false});
-    
+        );
+
     });
-    
-    ///////////////////////////////
-    
+
+
+    app.delete('/api/list', function (req, res) {
+        ToDoDB.deleteOne(req.body).then(
+            function () {
+                return true;
+                res.end();
+            }
+        ).catch(
+            function (err) {
+                res.json(err);
+            }
+        )
+    });
+
+
+    app.put('/api/list', function (req, res) {
+        ToDoDB.findOne(req.body)
+            .then(
+                function (data) {
+                    const status = data.inputBox;
+                    ToDoDB.updateOne(req.body, { inputBox: !status })
+                        .then(
+                            function (data) {
+                                res.json(data);
+                            }
+                        ).catch(
+                            function (err) {
+                                res.json(err);
+                            }
+                        );
+                }
+            );
+
+    });
+
+
     //////////////////////////////html//
-    
-    app.get('*',function(req, res){
+
+    app.get('*', function (req, res) {
         res.sendFile(path.join(__dirname, '../public/index.html'))
     });
-    
+
 
 }

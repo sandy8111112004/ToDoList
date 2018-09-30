@@ -1,8 +1,17 @@
-var toDoArray = [
-    /*{
-      newInput: "first test"
-    }*/
-  ];
-  
-  // Note how we export the array. This makes it accessible to other files using require.
-module.exports = toDoArray;
+let mongoose = require("mongoose");
+let Schema = mongoose.Schema;
+
+let ToDoSchema = new Schema({
+  newInput:{
+    type: String,
+    trim: true,
+    required: "Please enter a to-do Entry"
+  },
+  inputBox:{
+    type: Boolean
+  }
+});
+
+let ToDo = mongoose.model("ToDo", ToDoSchema);
+
+module.exports = ToDo;

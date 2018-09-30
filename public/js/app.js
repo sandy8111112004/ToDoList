@@ -11,8 +11,14 @@ const renderList = function (outputPlace, dataList) {
         const tempButton = $('<span class=left>');
         tempButton.append($("<button type='submit' class='delEntry'>").append($("<img src='./trash-alt-solid.svg' style='height:18px;'/>")));
         const tempSpan = $("<span class='entryText'>").text(`${dataList[i].newInput}`);
+        let renderCheck = 'unchecked';
+        if(dataList[i].inputBox){
+            renderCheck = 'checked';
+        }else{
+            renderCheck = 'unchecked';
+        }
         temp.append(
-            $("<input type='checkbox' class='inputBox'>"),
+            $(`<input type='checkbox' class='inputBox' ${renderCheck}>`),
             tempSpan,
             tempButton
         );
@@ -28,29 +34,14 @@ const runListQuery = function () {
     );
 }
 
-/*
-const clearList = function(){
-    alert("Clearing...");
-    $.ajax({url:"/api/clear", method:"POST"}).then(
-        function(){
-            $("#displayList").empty();
-        }
-    );
-}
-$("#clear").on("click",clearList);
-*/
-
 render();
 
 ///////////////////////////submit function
 const submitFunc = function () {
     console.log('get in submit');
-    //event.preventDefault();
-
-
     const newEntry = {
-        newInput: $('#newInput').val().trim()
-        //id: count
+        newInput: $('#newInput').val().trim(),
+        inputBox: false
     };
     console.log(newEntry);
     for (let key in newEntry) {
@@ -62,7 +53,7 @@ const submitFunc = function () {
 
     $.ajax({ url: '/api/list', method: 'POST', data: newEntry }).then(
         function (data) {
-            if (data.success) {
+            if (data) {
                 console.log('input data in post method ajax', data);
                 alert('You just added a new entry!');
                 $('#newInput').val('');
@@ -79,7 +70,6 @@ console.log('in app.js');
 $(document).on('click', '#submitButton', submitFunc);
 
 
-//////////////////////////////////////////////
 
 //////////delete Function////////////////
 const deleteFunc = function () {
@@ -90,9 +80,10 @@ const deleteFunc = function () {
     };
     console.log(selEntry);
     $.ajax({ url: '/api/list', method: 'DELETE', data: selEntry }).then(
-        function (data) {
-            console.log(data.success);
-            if (data.success) {
+        function (result) {
+            console.log('get in delete result function');
+            alert(result);    
+            if (result) {
                 console.log('input data in delete method ajax', data);
                 alert('You just deleted an entry!');
             } else {
@@ -109,43 +100,30 @@ $(document).on('click', '.delEntry', deleteFunc);
 
 
 /////////put function/////////////
-/*
+
 const putFunc = function () {
     console.log('get in putFunc');
     let parent = $(this).parent();
-    const selEntry = parent.text();
-    const tempButton = $('<span class=left>');
-        tempButton.append($("<button type='submit' class='delEntry'>").append($("<img src='./plus-square-regular.svg' style='height:18px;'/>")));
-    const toggleEntryPast = parent.childNodes[1];
-     parent.childNodes[1].html = 
-     `<input type="text" class="toggleInput" value='${toggleEntryPast.text()}' style="width: 300px"/>
-     <button type='submit' id="submitButton">`;
-     parent.childNodes[2].html= `${tempButton}`;
-
-    $(document).on('click', '#updateButton', function () {
-        const updateEntry = {
-            newInput: $('#newInput').val().trim()
-        };
-
-        console.log(selEntry);
-        $.ajax({ url: '/api/list/:selEntry', method: 'PUT', data: updateEntry }).then(
-            function (data) {
-                console.log(data.success);
-                if (data.success) {
-                    console.log('input data in put method ajax', data);
-                    alert('You just updated a new entry!');
-                } else {
-                    alert("There's a problem with your submision");
-                }
-
+    const selEntry = {
+        newInput: parent.text()
+    };
+    console.log(selEntry);
+    $.ajax({ url: '/api/list', method: 'PUT', data: selEntry }).then(
+        function (data) {
+            if (data) {
+                console.log('input data in put method ajax', data);
+                alert('You just updated a new entry!');
+            } else {
+                alert("There's a problem with your submision");
             }
-        );
-    });
+
+        }
+    );
 };
 
 
 $(document).on('click', '.inputBox', putFunc);
-*/
+
 
 
 

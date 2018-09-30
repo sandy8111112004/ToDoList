@@ -9,7 +9,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/ToDoDB",{useNewUrlParser: true});
+
+//mongo database connection
+mongoose.Promise = global.Promise;
+mongoose.connect(
+    process.env.MONGODB_URI || "mongodb://mingDatabase:password123456@dbh35.mlab.com:27357/heroku_mhzj4w0n",
+    {
+        userMongoClient: true
+    }
+);
+//mongoose.connect("mongodb://localhost/ToDoDB",{useNewUrlParser: true});
 
 //routes
 //////////////////////api///////////////////////////

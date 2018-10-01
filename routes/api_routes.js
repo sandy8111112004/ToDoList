@@ -33,8 +33,8 @@ module.exports = function (app) {
     app.delete('/api/list', function (req, res) {
         ToDoDB.deleteOne(req.body).then(
             function () {
-                return true;
-                res.end();
+                //return true;
+                res.json({success: true});
             }
         ).catch(
             function (err) {

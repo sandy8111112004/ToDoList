@@ -5,14 +5,14 @@ const render = function () {
 };
 
 const renderList = function (outputPlace, dataList) {
-    for (let i = 0; i < dataList.length; i++) {
+    dataList.forEach(element => {
         const output = $(outputPlace);
         const temp = $(`<div class='entry'>`);
         const tempButton = $('<span class=left>');
         tempButton.append($("<button type='submit' class='delEntry'>").append($("<img src='./trash-alt-solid.svg' style='height:18px;'/>")));
-        const tempSpan = $("<span class='entryText'>").text(`${dataList[i].newInput}`);
+        const tempSpan = $("<span class='entryText'>").text(`${element.newInput}`);
         let renderCheck = 'unchecked';
-        if(dataList[i].inputBox){
+        if(element.inputBox){
             renderCheck = 'checked';
         }else{
             renderCheck = 'unchecked';
@@ -23,7 +23,7 @@ const renderList = function (outputPlace, dataList) {
             tempButton
         );
         output.append(temp);
-    }
+    });
 };
 
 const runListQuery = function () {

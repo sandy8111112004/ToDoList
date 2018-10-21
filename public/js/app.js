@@ -55,7 +55,7 @@ const submitFunc = function () {
         function (data) {
             if (data) {
                 console.log('input data in post method ajax', data);
-                alert('You just added a new entry!');
+                // alert('You just added a new entry!');
                 $('#newInput').val('');
             } else {
                 alert("There's a problem with your submision");
@@ -81,8 +81,7 @@ const deleteFunc = function () {
     console.log(selEntry);
     $.ajax({ url: '/api/list', method: 'DELETE', data: selEntry }).then(
         function (result) {
-            console.log('get in delete result function');
-            alert(result);    
+            console.log('get in delete result function');  
             if (result) {
                 console.log('input data in delete method ajax', data);
                 alert('You just deleted an entry!');
@@ -112,7 +111,7 @@ const putFunc = function () {
         function (data) {
             if (data) {
                 console.log('input data in put method ajax', data);
-                alert('You just updated a new entry!');
+                // alert('You just updated a new entry!');
             } else {
                 alert("There's a problem with your submision");
             }

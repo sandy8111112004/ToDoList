@@ -82,6 +82,7 @@ const deleteFunc = function () {
     $.ajax({ url: '/api/list', method: 'DELETE', data: selEntry }).then(
         function (result) {
             console.log('get in delete result function');  
+            alert('werwer');
             if (result) {
                 console.log('input data in delete method ajax', data);
                 alert('You just deleted an entry!');
